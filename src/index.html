@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Speed Typing Test</title>
+  <style>
+    body {
+      background: #1e1e2f;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      color: #00adb5;
+    }
+
+    #quote {
+      max-width: 600px;
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #inputBox {
+      width: 600px;
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #80ffcc;
+    }
+
+    #startBtn {
+      padding: 10px 20px;
+      background-color: #00adb5;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    #startBtn:hover {
+      background-color: #019da3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Speed Typing Test</h1>
+  <div id="quote">Click "Start" to begin!</div>
+  <input type="text" id="inputBox" disabled placeholder="Type here...">
+  <button id="startBtn">Start</button>
+  <div id="result"></div>
+
+  <script>
+    const quotes = [
+      "The quick brown fox jumps over the lazy dog.",
+      "Typing fast is a useful skill in the digital age.",
+      "Practice makes perfect, especially when typing.",
+      "Code is like humor. When you have to explain it, it’s bad."
+    ];
+
+    const quoteEl = document.getElementById('quote');
+    const inputEl = document.getElementById('inputBox');
+    const resultEl = document.getElementById('result');
+    const startBtn = document.getElementById('startBtn');
+
+    let startTime, currentQuote;
+
+    startBtn.addEventListener('click', () => {
+      currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
+      quoteEl.textContent = currentQuote;
+      inputEl.value = '';
+      inputEl.disabled = false;
+      inputEl.focus();
+      resultEl.textContent = '';
+      startTime = new Date().getTime();
+    });
+
+    inputEl.addEventListener('input', () => {
+      if (inputEl.value === currentQuote) {
+        const endTime = new Date().getTime();
+        const timeTaken = ((endTime - startTime) / 1000).toFixed(2);
+        const words = currentQuote.split(' ').length;
+        const wpm = ((words / timeTaken) * 60).toFixed(2);
+        resultEl.textContent = `Completed in ${timeTaken}s | WPM: ${wpm}`;
+        inputEl.disabled = true;
+      }
+    });
+  </script>
+</body>
+</html>
