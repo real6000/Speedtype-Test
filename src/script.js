@@ -52,7 +52,7 @@ document.addEventListener("keydown", (e) => {
       setTimeout(() => {
         cooldown = false;
         cooldownMsg.textContent = "";
-      }, 2000);
+      }, 800);  // cooldown reduced from 2000ms to 800ms
     } else {
       cooldownMsg.textContent = "⏳ Please wait...";
     }
