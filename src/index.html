@@ -4,86 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Speed Typing Test</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #1e1e2f;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
-    h1 {
-      color: #00adb5;
-    }
-    #quote {
-      max-width: 600px;
-      font-size: 24px;
-      margin: 20px;
-      text-align: center;
-      line-height: 1.6;
-    }
-    #input {
-      padding: 10px;
-      font-size: 20px;
-      width: 60%;
-      border-radius: 5px;
-      border: none;
-      outline: none;
-    }
-    #stats {
-      margin-top: 20px;
-      font-size: 18px;
-    }
-    .hidden {
-      display: none;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Speed Typing Test</h1>
   <div id="quote"></div>
   <input type="text" id="input" placeholder="Start typing..." autocomplete="off" />
   <div id="stats" class="hidden"></div>
+  <div id="cooldownMsg" class="cooldown"></div>
 
-  <script>
-    const quotes = [
-      "Electric sunsets drift over chrome highways under neon skies.",
-      "Quantum pigeons flutter silently past skyscrapers of steel dreams.",
-      "Banana submarines whisper through marmalade oceans with velvet fins.",
-      "The toaster rebellion began at midnight inside the humming fridge fort.",
-      "Galactic noodles spin infinitely in hyperspace kitchens of doom."
-    ];
-
-    const quoteElement = document.getElementById("quote");
-    const input = document.getElementById("input");
-    const stats = document.getElementById("stats");
-
-    let currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
-    quoteElement.innerText = currentQuote;
-
-    let startTime;
-    let ended = false;
-
-    input.addEventListener("input", () => {
-      if (!startTime) startTime = new Date();
-
-      const typed = input.value;
-
-      if (typed === currentQuote) {
-        ended = true;
-        const endTime = new Date();
-        const timeTaken = (endTime - startTime) / 1000;
-        const wordCount = currentQuote.split(" ").length;
-        const wpm = Math.round((wordCount / timeTaken) * 60);
-
-        stats.innerHTML = `✅ Done!<br>⏱ Time: ${timeTaken.toFixed(2)}s<br>⌨️ WPM: ${wpm}`;
-        stats.classList.remove("hidden");
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
