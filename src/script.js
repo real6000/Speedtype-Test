@@ -17,6 +17,24 @@ const input = document.getElementById("input");
 const statsDiv = document.getElementById("stats");
 const cooldownMsg = document.getElementById("cooldownMsg");
 
+let bestWpm = sessionStorage.getItem("bestWpm") || 0;
+let bestTime = sessionStorage.getItem("bestTime") || Infinity;
+
+const bestStatsDiv = document.createElement("div");
+bestStatsDiv.style.marginTop = "10px";
+bestStatsDiv.style.fontWeight = "bold";
+document.getElementById("stats").after(bestStatsDiv);
+
+function updateBestStats() {
+  if (bestWpm > 0 && bestTime !== Infinity) {
+    bestStatsDiv.innerHTML = `🏆 Best WPM: ${bestWpm} | ⏱️ Fastest Time: ${bestTime.toFixed(2)}s`;
+  } else {
+    bestStatsDiv.textContent = "🏆 No best record yet";
+  }
+}
+
+updateBestStats();
+
 function loadQuote() {
   currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
   quoteDiv.textContent = currentQuote;
@@ -35,6 +53,18 @@ function endTest() {
   statsDiv.innerHTML = `⏱️ Time: ${elapsed.toFixed(2)}s<br>🚀 WPM: ${wpm}`;
   statsDiv.classList.remove("hidden");
   input.disabled = true;
+
+  // Check for best WPM and time
+  if (wpm > bestWpm) {
+    bestWpm = wpm;
+    sessionStorage.setItem("bestWpm", bestWpm);
+  }
+  if (elapsed < bestTime) {
+    bestTime = elapsed;
+    sessionStorage.setItem("bestTime", bestTime);
+  }
+
+  updateBestStats();
 }
 
 input.addEventListener("input", () => {
