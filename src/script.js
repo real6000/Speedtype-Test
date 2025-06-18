@@ -1,6 +1,6 @@
 // script.js
 const quotes = [
-  "Code is like humor. When you have to explain it, it’s bad.",
+  "Code is like humor. When you have to explain it, its bad.",
   "First, solve the problem. Then, write the code.",
   "Experience is the name everyone gives to their mistakes.",
   "In order to be irreplaceable, one must always be different.",
