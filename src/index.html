@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Speed Typing Test</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
       background: #1e1e2f;
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
+      color: white;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -15,90 +16,72 @@
       height: 100vh;
       margin: 0;
     }
-
     h1 {
-      margin-bottom: 10px;
       color: #00adb5;
     }
-
     #quote {
       max-width: 600px;
-      font-size: 20px;
-      margin-bottom: 20px;
+      font-size: 24px;
+      margin: 20px;
       text-align: center;
+      line-height: 1.6;
     }
-
-    #inputBox {
-      width: 600px;
+    #input {
       padding: 10px;
-      font-size: 18px;
-      border-radius: 8px;
+      font-size: 20px;
+      width: 60%;
+      border-radius: 5px;
       border: none;
       outline: none;
     }
-
-    #result {
+    #stats {
       margin-top: 20px;
       font-size: 18px;
-      color: #80ffcc;
     }
-
-    #startBtn {
-      padding: 10px 20px;
-      background-color: #00adb5;
-      border: none;
-      color: white;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    #startBtn:hover {
-      background-color: #019da3;
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
   <h1>Speed Typing Test</h1>
-  <div id="quote">Click "Start" to begin!</div>
-  <input type="text" id="inputBox" disabled placeholder="Type here...">
-  <button id="startBtn">Start</button>
-  <div id="result"></div>
+  <div id="quote"></div>
+  <input type="text" id="input" placeholder="Start typing..." autocomplete="off" />
+  <div id="stats" class="hidden"></div>
 
   <script>
     const quotes = [
-      "The quick brown fox jumps over the lazy dog.",
-      "Typing fast is a useful skill in the digital age.",
-      "Practice makes perfect, especially when typing.",
-      "Code is like humor. When you have to explain it, it’s bad."
+      "Electric sunsets drift over chrome highways under neon skies.",
+      "Quantum pigeons flutter silently past skyscrapers of steel dreams.",
+      "Banana submarines whisper through marmalade oceans with velvet fins.",
+      "The toaster rebellion began at midnight inside the humming fridge fort.",
+      "Galactic noodles spin infinitely in hyperspace kitchens of doom."
     ];
 
-    const quoteEl = document.getElementById('quote');
-    const inputEl = document.getElementById('inputBox');
-    const resultEl = document.getElementById('result');
-    const startBtn = document.getElementById('startBtn');
+    const quoteElement = document.getElementById("quote");
+    const input = document.getElementById("input");
+    const stats = document.getElementById("stats");
 
-    let startTime, currentQuote;
+    let currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    quoteElement.innerText = currentQuote;
 
-    startBtn.addEventListener('click', () => {
-      currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
-      quoteEl.textContent = currentQuote;
-      inputEl.value = '';
-      inputEl.disabled = false;
-      inputEl.focus();
-      resultEl.textContent = '';
-      startTime = new Date().getTime();
-    });
+    let startTime;
+    let ended = false;
 
-    inputEl.addEventListener('input', () => {
-      if (inputEl.value === currentQuote) {
-        const endTime = new Date().getTime();
-        const timeTaken = ((endTime - startTime) / 1000).toFixed(2);
-        const words = currentQuote.split(' ').length;
-        const wpm = ((words / timeTaken) * 60).toFixed(2);
-        resultEl.textContent = `Completed in ${timeTaken}s | WPM: ${wpm}`;
-        inputEl.disabled = true;
+    input.addEventListener("input", () => {
+      if (!startTime) startTime = new Date();
+
+      const typed = input.value;
+
+      if (typed === currentQuote) {
+        ended = true;
+        const endTime = new Date();
+        const timeTaken = (endTime - startTime) / 1000;
+        const wordCount = currentQuote.split(" ").length;
+        const wpm = Math.round((wordCount / timeTaken) * 60);
+
+        stats.innerHTML = `✅ Done!<br>⏱ Time: ${timeTaken.toFixed(2)}s<br>⌨️ WPM: ${wpm}`;
+        stats.classList.remove("hidden");
       }
     });
   </script>
